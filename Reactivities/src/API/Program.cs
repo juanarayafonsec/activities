@@ -7,14 +7,24 @@ using Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(opt =>
-{ 
+{
     opt.UseSqlite(builder.Configuration.GetConnectionString("Default"));
+});
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    });
 });
 
 builder.Services.AddControllers();
 builder.Services.AddServicesConfigurations();
 
 var app = builder.Build();
+
+app.UseCors("CorsPolicy");
 
 //TODO Implement the following code when the first controller is added
 // API Versioning 
@@ -58,7 +68,7 @@ try
 catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex,"Something went wrong during db migration");
+    logger.LogError(ex, "Something went wrong during db migration");
 }
 
 app.Run();
