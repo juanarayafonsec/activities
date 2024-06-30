@@ -7,6 +7,7 @@ public static class ModuleConfigurations
 {
     public static void AddServicesConfigurations(this IServiceCollection services)
     {
+        services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
         services.AddControllers();
         services.AddApiVersioningConfiguration();
@@ -18,6 +19,17 @@ public static class ModuleConfigurations
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblies(typeof(GetActivitiesHandler).Assembly, typeof(GetActivityHandler).Assembly));
 
+    }
+
+    private static void AddCorsConfiguration(this IServiceCollection services)
+    {
+        services.AddCors(opt =>
+        {
+            opt.AddPolicy("CorsPolicy", policy =>
+            {
+                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+            });
+        });
     }
 
     private static void AddApiVersioningConfiguration(this IServiceCollection services)
