@@ -26,14 +26,13 @@ var app = builder.Build();
 
 app.UseCors("CorsPolicy");
 
-//TODO Implement the following code when the first controller is added
 // API Versioning 
-//ApiVersionSet apiVersion = app.NewApiVersionSet()
-//    .HasApiVersion(new ApiVersion(1))
-//    .ReportApiVersions()
-//    .Build();
+ApiVersionSet apiVersion = app.NewApiVersionSet()
+    .HasApiVersion(new ApiVersion(1))
+    .ReportApiVersions()
+    .Build();
 
-//app.MapControllers().WithApiVersionSet(apiVersion);
+app.MapControllers().WithApiVersionSet(apiVersion);
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
