@@ -1,4 +1,5 @@
 ﻿using API.OpenApi;
+using Application.Handlers;
 using Asp.Versioning;
 
 namespace API;
@@ -6,8 +7,17 @@ public static class ModuleConfigurations
 {
     public static void AddServicesConfigurations(this IServiceCollection services)
     {
+        services.AddMediatorConfiguration();
+        services.AddControllers();
         services.AddApiVersioningConfiguration();
         services.AddSwaggerConfiguration();
+    }
+
+    private static void AddMediatorConfiguration(this IServiceCollection services)
+    {
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblies(typeof(GetActivitiesHandler).Assembly, typeof(GetActivityHandler).Assembly));
+
     }
 
     private static void AddApiVersioningConfiguration(this IServiceCollection services)
