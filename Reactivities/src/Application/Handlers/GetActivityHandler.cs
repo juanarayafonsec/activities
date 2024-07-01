@@ -1,6 +1,4 @@
 ﻿using Application.Queries;
-using Domain.Entities;
-using MediatR;
 using Persistence;
 
 namespace Application.Handlers;
