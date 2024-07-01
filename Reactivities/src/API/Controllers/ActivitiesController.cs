@@ -1,4 +1,5 @@
-﻿using Application.Queries;
+﻿using Application.Commands;
+using Application.Queries;
 using Asp.Versioning;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -18,5 +19,19 @@ public class ActivitiesController : BaseApiController
     public async Task<ActionResult<Activity>> GetActivity(Guid id)
     {
         return await Mediator.Send(new GetActivityQuery { Id = id });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddActivity(Activity activity)
+    {
+        await Mediator.Send(new AddActivityCommand { Activity = activity });
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditActivity(Activity activity)
+    {
+        await Mediator.Send(new EditActivityCommand{Activity = activity});
+        return Ok();
     }
 }
