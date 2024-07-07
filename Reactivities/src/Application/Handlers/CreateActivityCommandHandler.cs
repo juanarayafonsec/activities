@@ -2,12 +2,12 @@
 using Persistence;
 
 namespace Application.Handlers;
-public class CreateActivityHandler : IRequestHandler<CreateActivityCommand>
+public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand>
 {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
 
-    public CreateActivityHandler(DataContext context, IMapper mapper)
+    public CreateActivityCommandHandler(DataContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
