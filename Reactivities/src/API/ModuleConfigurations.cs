@@ -2,12 +2,19 @@
 using Application.Handlers;
 using Application.Mappings;
 using Asp.Versioning;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace API;
 public static class ModuleConfigurations
 {
-    public static void AddServicesConfigurations(this IServiceCollection services)
+    public static void AddServicesConfigurations(this IServiceCollection services, ConfigurationManager configuration)
     {
+        services.AddDbContext<DataContext>(opt =>
+        {
+            opt.UseSqlite(configuration.GetConnectionString("Default"));
+        });
+
         services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);

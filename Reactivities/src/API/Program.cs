@@ -6,12 +6,8 @@ using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("Default"));
-});
 
-builder.Services.AddServicesConfigurations();
+builder.Services.AddServicesConfigurations(builder.Configuration);
 
 var app = builder.Build();
 
