@@ -1,5 +1,6 @@
 ﻿using API.OpenApi;
 using Application.Handlers;
+using Application.Mappings;
 using Asp.Versioning;
 
 namespace API;
@@ -9,6 +10,7 @@ public static class ModuleConfigurations
     {
         services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
+        services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         services.AddControllers();
         services.AddApiVersioningConfiguration();
         services.AddSwaggerConfiguration();
