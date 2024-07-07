@@ -1,7 +1,7 @@
 ﻿using Application.Commands;
+using Application.Dtos;
 using Application.Queries;
 using Asp.Versioning;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -10,28 +10,29 @@ namespace API.Controllers;
 public class ActivitiesController : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<List<Activity>>> GetActivities()
-    {
-        return await Mediator.Send(new GetActivitiesQuery());
-    }
+    public async Task<ActionResult<List<ActivityDto>>> GetActivities() =>
+        Mapper.Map<List<ActivityDto>>(await Mediator.Send(new GetActivitiesQuery()));
+
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Activity>> GetActivity(Guid id)
-    {
-        return await Mediator.Send(new GetActivityQuery { Id = id });
-    }
+    public async Task<ActionResult<ActivityDto>> GetActivity(Guid id) =>
+        Mapper.Map<ActivityDto>(await Mediator.Send(new GetActivityQuery { Id = id }));
+
+
 
     [HttpPost]
-    public async Task<IActionResult> AddActivity(Activity activity)
+    public async Task<IActionResult> CreateActivity(CreateActivityDto activity)
     {
-        await Mediator.Send(new AddActivityCommand { Activity = activity });
+        var command = Mapper.Map<CreateActivityCommand>(activity);
+        await Mediator.Send(command);
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> EditActivity(Activity activity)
+    public async Task<IActionResult> EditActivity(ActivityDto activity)
     {
-        await Mediator.Send(new EditActivityCommand{Activity = activity});
+        var command = Mapper.Map<EditActivityCommand>(activity);
+        await Mediator.Send(command);
         return Ok();
     }
 }
