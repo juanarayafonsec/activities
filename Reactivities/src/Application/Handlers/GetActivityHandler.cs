@@ -12,6 +12,6 @@ public class GetActivityHandler : IRequestHandler<GetActivityQuery, Activity>
     }
 
     public async Task<Activity> Handle(GetActivityQuery request, CancellationToken cancellationToken)
-        => await _context.Activities.FindAsync(request.Id);
+        => await _context.Activities.FindAsync(request.Id, cancellationToken);
 }
 

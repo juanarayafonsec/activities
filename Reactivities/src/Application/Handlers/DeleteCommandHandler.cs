@@ -15,7 +15,7 @@ public class DeleteCommandHandler : IRequestHandler<DeleteCommand>
     {
         var activity = await _context.Activities.FindAsync(request.Id);
         _context.Remove(activity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }
 
