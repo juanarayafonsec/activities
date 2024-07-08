@@ -22,7 +22,7 @@ export default function ActivityList({ activities }: Props) {
         {activities.map((activity) => (
           <Item key={activity.id}>
             <ItemContent>
-              <ItemHeader as="a">{activity.title}</ItemHeader>
+              <ItemHeader as={"a"}>{activity.title}</ItemHeader>
               <ItemMeta>{activity.date}</ItemMeta>
               <ItemDescription>
                 <div>{activity.description}</div>
