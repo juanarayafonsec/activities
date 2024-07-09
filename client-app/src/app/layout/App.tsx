@@ -9,18 +9,35 @@ import axios from "axios";
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
-  
+  const [selectActivity, setSelectedActivity] = useState<Activity | undefined>(
+    undefined
+  );
+
   useEffect(() => {
-    axios.get<Activity[]>("https://localhost:5000/api/v1/Activities").then(response => {
-      setActivities(response.data)
-    });
+    axios
+      .get<Activity[]>("https://localhost:5000/api/v1/Activities")
+      .then((response) => {
+        setActivities(response.data);
+      });
   });
+
+  function handleSelectActivity(id: string) {
+    setSelectedActivity(activities.find((x) => x.id === id));
+  }
+
+  function handleCancelSelectActivity() {
+    setSelectedActivity(undefined);
+  }
 
   return (
     <>
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
-        <ActivityDashboard activities={activities}/>
+        <ActivityDashboard activities={activities} 
+        selectedActivity={selectActivity}
+        selectActivity={handleSelectActivity}
+        cancelSelectActivity={handleCancelSelectActivity}
+        />
       </Container>
     </>
   );

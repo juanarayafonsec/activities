@@ -1,6 +1,6 @@
 import {
-    Button,
-    ButtonGroup,
+  Button,
+  ButtonGroup,
   Card,
   CardContent,
   CardDescription,
@@ -12,24 +12,26 @@ import { Activity } from "../../../app/models/activity";
 
 interface Props {
   activity: Activity;
+  cancelSelectActivity: () => void;
 }
-export default function ActicityDetails({ activity }: Props) {
+export default function ActicityDetails({
+  activity,
+  cancelSelectActivity,
+}: Props) {
   return (
     <Card>
       <Image src={`/assets/categoryImages/${activity.category}.jpg`} />
       <CardContent>
         <CardHeader>{activity.title}</CardHeader>
         <CardMeta>
-          <span >{activity.date}</span>
+          <span>{activity.date}</span>
         </CardMeta>
-        <CardDescription>
-          {activity.description}
-        </CardDescription>
+        <CardDescription>{activity.description}</CardDescription>
       </CardContent>
       <CardContent extra>
         <ButtonGroup widths={2}>
-            <Button basic color="blue" content="Edit"/>
-            <Button basic color="grey" content="Cancel"/>
+          <Button basic color="blue" content="Edit" />
+          <Button onClick={cancelSelectActivity} basic color="grey" content="Cancel" />
         </ButtonGroup>
       </CardContent>
     </Card>
