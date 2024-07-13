@@ -13,13 +13,15 @@ import { Activity } from "../../../app/models/activity";
 interface Props {
   activity: Activity;
   cancelSelectActivity: () => void;
+  openForm: (id: string) => void;
 }
 export default function ActicityDetails({
   activity,
   cancelSelectActivity,
+  openForm
 }: Props) {
   return (
-    <Card>
+    <Card fluid>
       <Image src={`/assets/categoryImages/${activity.category}.jpg`} />
       <CardContent>
         <CardHeader>{activity.title}</CardHeader>
@@ -30,8 +32,13 @@ export default function ActicityDetails({
       </CardContent>
       <CardContent extra>
         <ButtonGroup widths={2}>
-          <Button basic color="blue" content="Edit" />
-          <Button onClick={cancelSelectActivity} basic color="grey" content="Cancel" />
+          <Button onClick={() => openForm(activity.id)}basic color="blue" content="Edit" />
+          <Button
+            onClick={cancelSelectActivity}
+            basic
+            color="grey"
+            content="Cancel"
+          />
         </ButtonGroup>
       </CardContent>
     </Card>

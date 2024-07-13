@@ -9,13 +9,23 @@ interface Props {
   selectedActivity: Activity | undefined;
   selectActivity: (id: string) => void;
   cancelSelectActivity: () => void;
+  editMode: boolean;
+  openForm: (id: string) => void;
+  closeForm: () => void;
+  createOrEdit: (activity : Activity) => void;
+  deleteActivity: (id: string) => void;
 }
 
 export default function ActivityDashboard({
   activities,
   selectedActivity,
+  editMode,
   selectActivity,
   cancelSelectActivity,
+  openForm,
+  closeForm,
+  createOrEdit,
+  deleteActivity
 }: Props) {
   return (
     <Grid>
@@ -23,17 +33,20 @@ export default function ActivityDashboard({
         <ActivityList
           activities={activities}
           selectActivity={selectActivity}
+          deleteActivity={deleteActivity}
         ></ActivityList>
       </GridColumn>
       <GridColumn width={6}>
-        {selectedActivity && (
+        {selectedActivity && !editMode && (
           <ActicityDetails
             activity={selectedActivity}
             cancelSelectActivity={cancelSelectActivity}
+            openForm={openForm}
           />
         )}
-
-        <ActivityForm />
+        {editMode && (
+          <ActivityForm closeForm={closeForm} activity={selectedActivity} createOrEdit={createOrEdit}/>
+        )}
       </GridColumn>
     </Grid>
   );
