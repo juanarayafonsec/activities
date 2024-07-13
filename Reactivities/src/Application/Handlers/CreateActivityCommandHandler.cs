@@ -2,7 +2,7 @@
 using Persistence;
 
 namespace Application.Handlers;
-public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand>
+public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand, Activity>
 {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
@@ -12,10 +12,12 @@ public class CreateActivityCommandHandler : IRequestHandler<CreateActivityComman
         _context = context;
         _mapper = mapper;
     }
-    public async Task Handle(CreateActivityCommand request, CancellationToken cancellationToken)
+    public async Task<Activity> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
     {
-         _context.Activities.Add(_mapper.Map<Activity>(request));
-         await _context.SaveChangesAsync(cancellationToken);
+        var newEntity = _mapper.Map<Activity>(request);
+        _context.Activities.Add(newEntity);
+        await _context.SaveChangesAsync(cancellationToken);
+        return newEntity;
     }
 }
 

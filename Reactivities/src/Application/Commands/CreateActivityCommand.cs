@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Application.Commands;
-public class CreateActivityCommand : IRequest
+public class CreateActivityCommand : IRequest<Activity>
 {
     public string Title { get; set; }
     public DateTime Date { get; set; }

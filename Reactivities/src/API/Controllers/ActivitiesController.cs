@@ -21,11 +21,12 @@ public class ActivitiesController : BaseApiController
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateActivity(CreateActivityDto activity, CancellationToken cancellationToken)
+    public async Task<ActionResult<ActivityDto>> CreateActivity(CreateActivityDto activity, CancellationToken cancellationToken)
     {
         var command = Mapper.Map<CreateActivityCommand>(activity);
-        await Mediator.Send(command, cancellationToken);
-        return Ok();
+        var newActivity = await Mediator.Send(command, cancellationToken);
+
+        return Mapper.Map<ActivityDto>(newActivity);
     }
 
     [HttpPut]
