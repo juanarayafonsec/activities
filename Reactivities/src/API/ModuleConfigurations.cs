@@ -17,7 +17,6 @@ public static class ModuleConfigurations
 
         services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
-        services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         services.AddControllers();
         services.AddApiVersioningConfiguration();
         services.AddSwaggerConfiguration();

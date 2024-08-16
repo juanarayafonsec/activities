@@ -1,3 +1,3 @@
 ﻿namespace Application.Queries;
 
-public class GetActivitiesQuery : IRequest<List<Activity>>;
+public class GetActivitiesQuery : IRequest<Result<List<Activity>>>;
