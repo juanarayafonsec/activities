@@ -1,7 +1,7 @@
 ﻿using Application.Commands;
-using Application.Dtos;
 using Application.Queries;
 using Asp.Versioning;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -10,37 +10,29 @@ namespace API.Controllers;
 public class ActivitiesController : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<List<ActivityDto>>> GetActivities(CancellationToken cancellationToken) =>
-        Mapper.Map<List<ActivityDto>>(await Mediator.Send(new GetActivitiesQuery(), cancellationToken));
+    public async Task<IActionResult> GetActivities(CancellationToken cancellationToken) =>
+        HandleResult(await Mediator.Send(new GetActivitiesQuery(), cancellationToken));
 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ActivityDto>> GetActivity(Guid id, CancellationToken cancellationToken) =>
-        Mapper.Map<ActivityDto>(await Mediator.Send(new GetActivityQuery { Id = id }, cancellationToken));
+    public async Task<IActionResult> GetActivity(Guid id, CancellationToken cancellationToken) =>
+        HandleResult(await Mediator.Send(new GetActivityQuery { Id = id }, cancellationToken));
 
 
 
     [HttpPost]
-    public async Task<ActionResult<ActivityDto>> CreateActivity(CreateActivityDto activity, CancellationToken cancellationToken)
-    {
-        var command = Mapper.Map<CreateActivityCommand>(activity);
-        var newActivity = await Mediator.Send(command, cancellationToken);
+    public async Task<IActionResult> CreateActivity(Activity activity, CancellationToken cancellationToken) =>
+        HandleResult(await Mediator.Send(new CreateActivityCommand { Activity = activity }, cancellationToken));
 
-        return Mapper.Map<ActivityDto>(newActivity);
-    }
 
     [HttpPut]
-    public async Task<IActionResult> EditActivity(ActivityDto activity, CancellationToken cancellationToken)
-    {
-        var command = Mapper.Map<EditActivityCommand>(activity);
-        await Mediator.Send(command, cancellationToken);
-        return Ok();
-    }
+    public async Task<IActionResult> EditActivity(Activity activity, CancellationToken cancellationToken) =>
+        HandleResult(await Mediator.Send(new EditActivityCommand { Activity = activity }, cancellationToken));
+
+
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteActivity(Guid id, CancellationToken cancellationToken)
-    {
-        await Mediator.Send(new DeleteCommand { Id = id }, cancellationToken);
-        return Ok();
-    }
+    public async Task<IActionResult> DeleteActivity(Guid id, CancellationToken cancellationToken) =>
+        HandleResult(await Mediator.Send(new DeleteCommand { Id = id }, cancellationToken));
+
 }

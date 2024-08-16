@@ -2,7 +2,7 @@
 using Persistence;
 
 namespace Application.Handlers;
-public class GetActivityHandler : IRequestHandler<GetActivityQuery, Activity>
+public class GetActivityHandler : IRequestHandler<GetActivityQuery, Result<Activity>>
 {
     private readonly DataContext _context;
 
@@ -11,7 +11,7 @@ public class GetActivityHandler : IRequestHandler<GetActivityQuery, Activity>
         _context = context;
     }
 
-    public async Task<Activity> Handle(GetActivityQuery request, CancellationToken cancellationToken)
-        => await _context.Activities.FindAsync(request.Id, cancellationToken);
+    public async Task<Result<Activity>> Handle(GetActivityQuery request, CancellationToken cancellationToken)
+        => Result<Activity>.Success(await _context.Activities.FindAsync(request.Id, cancellationToken));
 }
 

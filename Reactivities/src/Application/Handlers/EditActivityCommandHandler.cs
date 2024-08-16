@@ -2,7 +2,7 @@
 using Persistence;
 
 namespace Application.Handlers;
-public class EditActivityCommandHandler : IRequestHandler<EditActivityCommand>
+public class EditActivityCommandHandler : IRequestHandler<EditActivityCommand, Result<bool>>
 {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
@@ -13,10 +13,18 @@ public class EditActivityCommandHandler : IRequestHandler<EditActivityCommand>
         _context = context;
         _mapper = mapper;
     }
-    public async Task Handle(EditActivityCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(EditActivityCommand request, CancellationToken cancellationToken)
     {
-        _context.Activities.Update(_mapper.Map<Activity>(request));
-        await _context.SaveChangesAsync(cancellationToken);
+        var activity = await _context.Activities.FindAsync(request.Activity.Id, cancellationToken);
+
+        if (activity is null) return null;
+
+        activity = request.Activity;
+
+        _context.Activities.Update(activity);
+
+        return await _context.SaveChangesAsync(cancellationToken) > 0 ? Result<bool>.Success(true) : Result<bool>.Failure("Failed to update activity");
+
     }
 }
 
