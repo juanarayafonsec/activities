@@ -1,7 +1,9 @@
 ﻿using API.OpenApi;
 using Application.Handlers;
-using Application.Mappings;
+using Application.Validators;
 using Asp.Versioning;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -17,6 +19,7 @@ public static class ModuleConfigurations
 
         services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
+        services.AddFluentValidatorConfiguration();
         services.AddControllers();
         services.AddApiVersioningConfiguration();
         services.AddSwaggerConfiguration();
@@ -61,5 +64,12 @@ public static class ModuleConfigurations
     {
         services.AddSwaggerGen();
         services.ConfigureOptions<ConfigureSwaggerGenOptions>();
+    }
+    private static void AddFluentValidatorConfiguration(this IServiceCollection services)
+    {
+
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining<CreateCommandValidator>();
+        services.AddValidatorsFromAssemblyContaining<EditCommandValidator>();
     }
 }
