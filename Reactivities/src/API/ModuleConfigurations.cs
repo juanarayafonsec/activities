@@ -69,7 +69,6 @@ public static class ModuleConfigurations
     {
 
         services.AddFluentValidationAutoValidation();
-        services.AddValidatorsFromAssemblyContaining<CreateCommandValidator>();
-        services.AddValidatorsFromAssemblyContaining<EditCommandValidator>();
+        services.AddValidatorsFromAssemblyContaining<ActivityDtoValidator>();
     }
 }

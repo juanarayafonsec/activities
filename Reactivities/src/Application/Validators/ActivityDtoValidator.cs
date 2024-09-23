@@ -1,10 +1,12 @@
-﻿using FluentValidation;
+﻿using Application.Dtos;
+using FluentValidation;
 
 namespace Application.Validators;
-public class ActivityValidator : AbstractValidator<Activity>
+public class ActivityDtoValidator : AbstractValidator<EditActivityDto>
 {
-    public ActivityValidator()
+    public ActivityDtoValidator()
     {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("Activity Id must not be empty.");
         RuleFor(x => x.Title).NotEmpty().WithMessage("Title must not be empty.");
         RuleFor(x => x.Description).NotEmpty().WithMessage("Description must not be empty.");
         RuleFor(x => x.Date).NotEmpty().WithMessage("Date must not be empty.");
@@ -13,4 +15,3 @@ public class ActivityValidator : AbstractValidator<Activity>
         RuleFor(x => x.Venue).NotEmpty().WithMessage("Venue must not be empty.");
     }
 }
-

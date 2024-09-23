@@ -1,5 +1,5 @@
 ﻿namespace Application.Dtos;
-public class ActivityDto
+public class EditActivityDto
 {
     public Guid Id { get; set; }
     public string Title { get; set; }

@@ -1,4 +1,5 @@
 using API;
+using API.Middleware;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ builder.Services.AddServicesConfigurations(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("CorsPolicy");
 
 // API Versioning 

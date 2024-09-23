@@ -1,7 +1,8 @@
 ﻿using Application.Commands;
+using Application.Dtos;
+using Application.Mappings;
 using Application.Queries;
 using Asp.Versioning;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -18,21 +19,15 @@ public class ActivitiesController : BaseApiController
     public async Task<IActionResult> GetActivity(Guid id, CancellationToken cancellationToken) =>
         HandleResult(await Mediator.Send(new GetActivityQuery { Id = id }, cancellationToken));
 
-
-
     [HttpPost]
-    public async Task<IActionResult> CreateActivity(Activity activity, CancellationToken cancellationToken) =>
-        HandleResult(await Mediator.Send(new CreateActivityCommand { Activity = activity }, cancellationToken));
-
+    public async Task<IActionResult> CreateActivity(CreateActivityDto activity, CancellationToken cancellationToken) =>
+        HandleResult(await Mediator.Send(new CreateActivityCommand { Activity = activity.Map() }, cancellationToken));
 
     [HttpPut]
-    public async Task<IActionResult> EditActivity(Activity activity, CancellationToken cancellationToken) =>
-        HandleResult(await Mediator.Send(new EditActivityCommand { Activity = activity }, cancellationToken));
-
-
+    public async Task<IActionResult> EditActivity(EditActivityDto editActivity, CancellationToken cancellationToken) =>
+        HandleResult(await Mediator.Send(new EditActivityCommand { Activity = editActivity.Map() }, cancellationToken));
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActivity(Guid id, CancellationToken cancellationToken) =>
         HandleResult(await Mediator.Send(new DeleteCommand { Id = id }, cancellationToken));
-
 }
