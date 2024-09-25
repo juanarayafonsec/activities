@@ -13,7 +13,8 @@ export default function NavBar() {
           />
           Reactive
         </MenuItem>
-        <MenuItem name="Activities" as={NavLink} to="activities"></MenuItem>
+        <MenuItem name="Activities" as={NavLink} to="/activities"></MenuItem>
+        <MenuItem name="Errors" as={NavLink} to="/errors"></MenuItem>
         <MenuItem>
           <Button as={NavLink} to="createActivity" positive>
             CreateActivity

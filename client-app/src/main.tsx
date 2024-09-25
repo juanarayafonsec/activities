@@ -1,5 +1,6 @@
 import "semantic-ui-css/semantic.min.css";
 import "../node_modules/react-calendar/dist/Calendar.css";
+import "../node_modules/react-toastify/dist/ReactToastify.css";
 import "./app/layout/styles.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
