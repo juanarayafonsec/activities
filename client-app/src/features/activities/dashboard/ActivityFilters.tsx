@@ -5,7 +5,7 @@ export default function ActivityFilters(){
     return(
         <>
         <Menu vertical size="large" style={{width:"100%", marginTop:25}}>
-            <Header icon="filter" attahced color="teal"/>
+            <Header icon="filter" attached="top" color="teal"/>
             <MenuItem content="All Activities"/>
             <MenuItem content="I am going"/>
             <MenuItem content="I am hosting"/>
