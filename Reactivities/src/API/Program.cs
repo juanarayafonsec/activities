@@ -4,6 +4,7 @@ using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Context;
 
 namespace API;
 public static class ModuleConfigurations
@@ -15,6 +16,7 @@ public static class ModuleConfigurations
         services.AddDbContext<DataContext>(opt =>
         {
             opt.UseSqlite(configuration.GetConnectionString("Default"));
+            
         });
 
         services.AddCorsConfiguration();

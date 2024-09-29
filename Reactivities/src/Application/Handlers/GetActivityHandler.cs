@@ -1,5 +1,6 @@
 ﻿using Application.Queries;
 using Persistence;
+using Persistence.Context;
 
 namespace Application.Handlers;
 public class GetActivityHandler(DataContext context) : IRequestHandler<GetActivityQuery, Result<Activity>>

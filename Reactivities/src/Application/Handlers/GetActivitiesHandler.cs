@@ -3,6 +3,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Context;
 
 namespace Application.Handlers;
 public class GetActivitiesHandler : IRequestHandler<GetActivitiesQuery, Result<List<Activity>>>

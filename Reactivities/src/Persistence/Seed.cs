@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Persistence.Context;
 
 namespace Persistence
 {

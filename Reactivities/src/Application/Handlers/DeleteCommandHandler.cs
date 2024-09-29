@@ -1,5 +1,6 @@
 ﻿using Application.Commands;
 using Persistence;
+using Persistence.Context;
 
 namespace Application.Handlers;
 public class DeleteCommandHandler(DataContext context) : IRequestHandler<DeleteCommand, Result<bool>>
