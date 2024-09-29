@@ -1,5 +1,4 @@
 ﻿using Application.Commands;
-using Persistence;
 using Persistence.Context;
 
 namespace Application.Handlers;
