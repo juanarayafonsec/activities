@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 
 namespace Application.Mappings;
+
 public static class ActivityMapper
 {
     public static Activity Map(this EditActivityDto editActivity)
@@ -25,4 +26,14 @@ public static class ActivityMapper
             Title = activity.Title,
             Venue = activity.Venue
         };
+
+    public static void Map(this Activity target, Activity source)
+    {
+        target.Category = source.Category;
+        target.City = source.City;
+        target.Date = source.Date;
+        target.Description = source.Description;
+        target.Title = source.Title;
+        target.Venue = source.Venue;
+    }
 }
