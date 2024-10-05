@@ -5,7 +5,7 @@ using Persistence.Context;
 
 namespace Application.Handlers;
 
-public class EditActivityCommandHandler(DataContext context) : IRequestHandler<EditActivityCommand, Result<bool>>
+public class EditActivityCommandHandler(CoreDbContext context) : IRequestHandler<EditActivityCommand, Result<bool>>
 {
     public async Task<Result<bool>> Handle(EditActivityCommand request, CancellationToken cancellationToken)
     {

@@ -5,9 +5,9 @@ using Persistence.Context;
 namespace Application.Handlers;
 public class GetActivitiesHandler : IRequestHandler<GetActivitiesQuery, Result<List<Activity>>>
 {
-    private readonly DataContext _context;
+    private readonly CoreDbContext _context;
 
-    public GetActivitiesHandler(DataContext context)
+    public GetActivitiesHandler(CoreDbContext context)
     {
         _context = context;
     }

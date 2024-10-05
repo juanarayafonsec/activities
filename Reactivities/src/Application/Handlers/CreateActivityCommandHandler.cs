@@ -3,13 +3,13 @@ using Persistence;
 using Persistence.Context;
 
 namespace Application.Handlers;
-public class CreateActivityCommandHandler(DataContext context) : IRequestHandler<CreateActivityCommand, Result<Activity>>
+public class CreateActivityCommandHandler(CoreDbContext contextt) : IRequestHandler<CreateActivityCommand, Result<Activity>>
 {
 
     public async Task<Result<Activity>> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
     {
-        context.Activities.Add(request.Activity);
-        return await context.SaveChangesAsync(cancellationToken) > 0 ?
+        contextt.Activities.Add(request.Activity);
+        return await contextt.SaveChangesAsync(cancellationToken) > 0 ?
             Result<Activity>.Success(request.Activity) : Result<Activity>.Failure("Failed to create activity");
     }
 }

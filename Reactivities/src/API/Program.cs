@@ -2,6 +2,8 @@ using API;
 using API.Middleware;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Context;
@@ -50,9 +52,10 @@ await using var scope = app.Services.CreateAsyncScope();
 var services = scope.ServiceProvider;
 try
 {
-    var context = services.GetRequiredService<DataContext>();
+    var context = services.GetRequiredService<CoreDbContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(context);
+    await Seed.SeedData(context, userManager);
 }
 catch (Exception ex)
 {

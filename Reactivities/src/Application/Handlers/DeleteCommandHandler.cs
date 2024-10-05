@@ -2,7 +2,7 @@
 using Persistence.Context;
 
 namespace Application.Handlers;
-public class DeleteCommandHandler(DataContext context) : IRequestHandler<DeleteCommand, Result<bool>>
+public class DeleteCommandHandler(CoreDbContext context) : IRequestHandler<DeleteCommand, Result<bool>>
 {
     public async Task<Result<bool>> Handle(DeleteCommand request, CancellationToken cancellationToken)
     {
