@@ -1,5 +1,5 @@
 ﻿namespace Application.Dtos;
-public class CreateActivityDto
+public record CreateActivityDto
 {
     public string Title { get; set; }
     public DateTime Date { get; set; }

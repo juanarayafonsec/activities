@@ -18,6 +18,9 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 // API Versioning 
 ApiVersionSet apiVersion = app.NewApiVersionSet()
     .HasApiVersion(new ApiVersion(1))

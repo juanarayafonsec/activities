@@ -1,12 +1,17 @@
-﻿using API.OpenApi;
+﻿using System.Text;
+using API.OpenApi;
+using API.Services;
 using Application.Handlers;
 using Application.Validators;
 using Asp.Versioning;
 using Domain.Entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
+using Microsoft.IdentityModel.Tokens;
 using Persistence.Context;
 
 namespace API;
@@ -20,7 +25,11 @@ public static class ModuleConfigurations
         services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
         services.AddFluentValidatorConfiguration();
-        services.AddControllers();
+        services.AddControllers(opt =>
+        {
+            var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            opt.Filters.Add(new AuthorizeFilter(policy));
+        });
         services.AddApiVersioningConfiguration();
         services.AddSwaggerConfiguration();
     }
@@ -71,8 +80,25 @@ public static class ModuleConfigurations
 
     private static void AddIdentity(this IServiceCollection services)
     {
-        services.AddIdentityCore<AppUser>(opt => { opt.Password.RequireNonAlphanumeric = false; })
+        services.AddIdentityCore<AppUser>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.User.RequireUniqueEmail = true;
+            })
             .AddEntityFrameworkStores<CoreDbContext>();
-        services.AddAuthentication();
+
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes("gtnwUbrmmRupujwFGNRhetAVstA6uy2QRvJy78kch65a37E9TJRfJqmwEKctixG8CmJKNjV6igyZ"));
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+        {
+            opt.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = key,
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
+        services.AddScoped<TokenService>();
     }
 }
