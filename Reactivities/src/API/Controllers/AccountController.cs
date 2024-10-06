@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Dtos;
 using API.Services;
 using Asp.Versioning;
@@ -23,19 +24,15 @@ public class AccountController(UserManager<AppUser> userManager, TokenService to
         if (user is null) return Unauthorized();
 
         return await userManager.CheckPasswordAsync(user, loginDto.Password)
-            ? new UserDto
-            {
-                DisplayName = user.DisplayName, Image = null, Token = tokenService.GenerateToken(user),
-                Username = user.UserName
-            }
+            ? CreateUserObject(user)
             : Unauthorized();
     }
 
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        if (await userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
-            return BadRequest("Username is taken");
+        if (await userManager.Users.AnyAsync(x => x.UserName == registerDto.Username || x.Email == registerDto.Email))
+            return BadRequest("Email or Username registered");
 
         var user = new AppUser
         {
@@ -47,13 +44,25 @@ public class AccountController(UserManager<AppUser> userManager, TokenService to
         var result = await userManager.CreateAsync(user, registerDto.Password);
 
         return result.Succeeded
-            ? new UserDto
-            {
-                DisplayName = user.DisplayName,
-                Image = null,
-                Token = tokenService.GenerateToken(user),
-                Username = user.UserName
-            }
+            ? CreateUserObject(user)
             : BadRequest("Problem registering user");
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<UserDto>> GetUser()
+    {
+        var user = await userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+        return CreateUserObject(user);
+    }
+
+    private UserDto CreateUserObject(AppUser user)
+    {
+        return new UserDto
+        {
+            DisplayName = user.DisplayName,
+            Image = null,
+            Token = tokenService.GenerateToken(user),
+            Username = user.UserName
+        };
     }
 }
