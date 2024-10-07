@@ -6,6 +6,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
@@ -31,8 +32,11 @@ public class AccountController(UserManager<AppUser> userManager, TokenService to
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        if (await userManager.Users.AnyAsync(x => x.UserName == registerDto.Username || x.Email == registerDto.Email))
-            return BadRequest("Email or Username registered");
+        if (await userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+            return ModelError("username", "Username is taken");
+        if (await userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+            return ModelError("email", "Email is taken");
+            
 
         var user = new AppUser
         {
@@ -64,5 +68,11 @@ public class AccountController(UserManager<AppUser> userManager, TokenService to
             Token = tokenService.GenerateToken(user),
             Username = user.UserName
         };
+    }
+
+    private ActionResult ModelError(string key, string errorMessage)
+    {
+        ModelState.AddModelError(key, errorMessage);
+        return ValidationProblem();
     }
 }

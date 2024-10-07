@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Activity } from "../../../app/models/activity";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";

@@ -3,10 +3,11 @@ using Application.Dtos;
 using Application.Mappings;
 using Application.Queries;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
-
+[AllowAnonymous ]
 [ApiVersion(1)]
 public class ActivitiesController : BaseApiController
 {
