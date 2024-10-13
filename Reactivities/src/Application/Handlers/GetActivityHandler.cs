@@ -1,10 +1,20 @@
-﻿using Application.Queries;
+﻿using Application.Dtos;
+using Application.Mappings;
+using Application.Queries;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
 namespace Application.Handlers;
-public class GetActivityHandler(CoreDbContext context) : IRequestHandler<GetActivityQuery, Result<Activity>>
-{
-    public async Task<Result<Activity>> Handle(GetActivityQuery request, CancellationToken cancellationToken)
-        => Result<Activity>.Success(await context.Activities.FindAsync(request.Id, cancellationToken));
-}
 
+public class GetActivityHandler(CoreDbContext context) : IRequestHandler<GetActivityQuery, Result<ActivityDto>>
+{
+    public async Task<Result<ActivityDto>> Handle(GetActivityQuery request, CancellationToken cancellationToken)
+    {
+        var activity = await context.Activities.Where(a => a.Id == request.Id)
+            .Include(a => a.Attendees)
+            .ThenInclude(att => att.AppUser)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return Result<ActivityDto>.Success(activity.ToActivityDto());
+    }
+}

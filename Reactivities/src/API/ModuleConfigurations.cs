@@ -2,11 +2,13 @@
 using API.OpenApi;
 using API.Services;
 using Application.Handlers;
+using Application.Interfaces;
 using Application.Validators;
 using Asp.Versioning;
 using Domain.Entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -22,6 +24,7 @@ public static class ModuleConfigurations
     {
         services.AddDbContext<CoreDbContext>(opt => { opt.UseSqlite(configuration.GetConnectionString("Default")); });
         services.AddIdentity();
+        services.AddAccessor();
         services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
         services.AddFluentValidatorConfiguration();
@@ -100,5 +103,11 @@ public static class ModuleConfigurations
             };
         });
         services.AddScoped<TokenService>();
+    }
+
+    private static void AddAccessor(this IServiceCollection services)
+    {
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUserAccessor, UserAccessor>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.Commands;
 using Application.Dtos;
+using Application.Handlers;
 using Application.Mappings;
 using Application.Queries;
 using Asp.Versioning;
@@ -31,4 +32,8 @@ public class ActivitiesController : BaseApiController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActivity(Guid id, CancellationToken cancellationToken) =>
         HandleResult(await Mediator.Send(new DeleteCommand { Id = id }, cancellationToken));
+    
+    [HttpPost("{id}/attend")]
+    public async Task<IActionResult> Attend(Guid id, CancellationToken cancellationToken) =>
+    HandleResult(await Mediator.Send(new UpdateAttendanceCommand{Id = id}, cancellationToken));
 }

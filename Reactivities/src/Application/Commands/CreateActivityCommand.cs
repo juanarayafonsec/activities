@@ -1,6 +1,8 @@
-﻿namespace Application.Commands;
+﻿using Application.Dtos;
 
-public class CreateActivityCommand : IRequest<Result<Activity>>
+namespace Application.Commands;
+
+public class CreateActivityCommand : IRequest<Result<ActivityDto>>
 {
     public Activity Activity { get; set; }
 }

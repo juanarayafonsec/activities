@@ -1,3 +1,5 @@
-﻿namespace Application.Queries;
+﻿using Application.Dtos;
 
-public class GetActivitiesQuery : IRequest<Result<List<Activity>>>;
+namespace Application.Queries;
+
+public class GetActivitiesQuery : IRequest<Result<List<ActivityDto>>>;
