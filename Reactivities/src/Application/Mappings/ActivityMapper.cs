@@ -5,10 +5,10 @@ namespace Application.Mappings;
 
 public static class ActivityMapper
 {
-    public static Activity Map(this EditActivityDto editActivity)
+    public static Activity Map(this EditActivityDto editActivity, Guid id)
         => new()
         {
-            Id = editActivity.Id,
+            Id = id,
             Category = editActivity.Category,
             City = editActivity.City,
             Date = editActivity.Date,
