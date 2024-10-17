@@ -8,6 +8,7 @@ import {
   ItemGroup,
   ItemHeader,
   ItemImage,
+  Label,
   Segment,
   SegmentGroup,
 } from "semantic-ui-react";
@@ -15,6 +16,7 @@ import { Activity } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
 import { SyntheticEvent, useState } from "react";
 import { format } from "date-fns";
+import ActivityListItemAttendee from "./ActivityListItemAttendee";
 
 interface Props {
   activity: Activity;
@@ -37,23 +39,39 @@ export default function ActivityLisyItem({ activity }: Props) {
       <Segment>
         <ItemGroup>
           <Item>
-            <ItemImage size="tiny" circular src="assets/user.png" />
+            <ItemImage size="tiny" circular src="/assets/user.png" />
             <ItemContent>
               <ItemHeader as={Link} to={`/activities/${activity.id}`}>
                 {activity.title}
               </ItemHeader>
-              <ItemDescription>Hpsted by Bob</ItemDescription>
+              <ItemDescription>{activity.host?.displayName}</ItemDescription>
+              {activity.isHost && (
+                <ItemDescription>
+                  <Label basic color="orange">
+                    You are hosting this activity
+                  </Label>
+                </ItemDescription>
+              )}
+              {activity.isGoing && !activity.isHost && (
+                <ItemDescription>
+                  <Label basic color="green">
+                    You are going to this activity
+                  </Label>
+                </ItemDescription>
+              )}
             </ItemContent>
           </Item>
         </ItemGroup>
       </Segment>
       <Segment>
         <span>
-          <Icon name="clock" /> {format(activity.date!, 'dd MMM yyyy h:mm aa')}
+          <Icon name="clock" /> {format(activity.date!, "dd MMM yyyy h:mm aa")}
           <Icon name="marker" /> {activity.venue}
         </span>
       </Segment>
-      <Segment secondary>Attendess go here</Segment>
+      <Segment secondary>
+         <ActivityListItemAttendee attendees={activity.attendees!}></ActivityListItemAttendee>
+      </Segment>
       <Segment clearing>
         <span> {activity.description}</span>
         <Button
