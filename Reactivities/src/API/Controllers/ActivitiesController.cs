@@ -1,4 +1,6 @@
 ﻿using Application.Commands;
+using Application.Commands.Activities;
+using Application.Commands.Attendees;
 using Application.Dtos;
 using Application.Handlers;
 using Application.Mappings;

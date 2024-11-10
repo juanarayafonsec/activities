@@ -1,6 +1,6 @@
 ﻿using Application.Dtos;
 
-namespace Application.Commands;
+namespace Application.Commands.Activities;
 
 public class CreateActivityCommand : IRequest<Result<ActivityDto>>
 {

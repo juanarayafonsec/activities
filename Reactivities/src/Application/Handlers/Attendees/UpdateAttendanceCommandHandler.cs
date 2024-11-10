@@ -1,8 +1,9 @@
+using Application.Commands.Attendees;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers;
+namespace Application.Handlers.Attendees;
 
 public class UpdateAttendanceCommandHandler(CoreDbContext context, IUserAccessor accessor)
     : IRequestHandler<UpdateAttendanceCommand, Result<bool>>

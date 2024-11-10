@@ -1,4 +1,4 @@
-namespace Application.Handlers;
+namespace Application.Commands.Attendees;
 
 public class UpdateAttendanceCommand : IRequest<Result<bool>>
 {

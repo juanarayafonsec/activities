@@ -1,11 +1,11 @@
-﻿using Application.Commands;
+﻿using Application.Commands.Activities;
 using Application.Dtos;
 using Application.Interfaces;
 using Application.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers;
+namespace Application.Handlers.Activities;
 public class CreateActivityCommandHandler(CoreDbContext context, IUserAccessor userAccessor) : IRequestHandler<CreateActivityCommand, Result<ActivityDto>>
 {
 

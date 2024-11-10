@@ -4,7 +4,7 @@ using Application.Queries;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers;
+namespace Application.Handlers.Activities;
 
 public class GetActivityHandler(CoreDbContext context) : IRequestHandler<GetActivityQuery, Result<ActivityDto>>
 {

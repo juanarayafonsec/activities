@@ -1,9 +1,9 @@
-﻿using Application.Commands;
+﻿using Application.Commands.Activities;
 using Application.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers;
+namespace Application.Handlers.Activities;
 
 public class EditActivityCommandHandler(CoreDbContext context) : IRequestHandler<EditActivityCommand, Result<bool>>
 {

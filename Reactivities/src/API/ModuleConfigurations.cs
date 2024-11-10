@@ -2,6 +2,7 @@
 using API.OpenApi;
 using API.Services;
 using Application.Handlers;
+using Application.Handlers.Activities;
 using Application.Interfaces;
 using Application.Validators;
 using Asp.Versioning;

@@ -1,7 +1,7 @@
-﻿using Application.Commands;
+﻿using Application.Commands.Activities;
 using Persistence.Context;
 
-namespace Application.Handlers;
+namespace Application.Handlers.Activities;
 public class DeleteCommandHandler(CoreDbContext context) : IRequestHandler<DeleteCommand, Result<bool>>
 {
     public async Task<Result<bool>> Handle(DeleteCommand request, CancellationToken cancellationToken)
