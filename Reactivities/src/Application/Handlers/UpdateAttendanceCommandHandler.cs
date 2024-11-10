@@ -21,7 +21,6 @@ public class UpdateAttendanceCommandHandler(CoreDbContext context, IUserAccessor
         var hostUsername = activity.Attendees.FirstOrDefault(x => x.IsHost)?.AppUser?.UserName;
 
         var attendance = activity.Attendees.FirstOrDefault(x => x.AppUser.UserName == user.UserName);
-        var a = !activity.IsCancelled;
        
         if (attendance != null && hostUsername == user.UserName)
             activity.IsCancelled = !activity.IsCancelled;

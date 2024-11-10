@@ -37,9 +37,17 @@ export default function ActivityLisyItem({ activity }: Props) {
   return (
     <SegmentGroup>
       <Segment>
+        {activity.isCancelled && (
+          <Label
+            attached="top"
+            color="red"
+            content="Cancelled"
+            style={{ textAlign: "center" }}
+          />
+        )}
         <ItemGroup>
           <Item>
-            <ItemImage size="tiny" circular src="/assets/user.png" />
+            <ItemImage style={{marinBotton:3}} size="tiny" circular src="/assets/user.png" />
             <ItemContent>
               <ItemHeader as={Link} to={`/activities/${activity.id}`}>
                 {activity.title}
@@ -70,7 +78,9 @@ export default function ActivityLisyItem({ activity }: Props) {
         </span>
       </Segment>
       <Segment secondary>
-         <ActivityListItemAttendee attendees={activity.attendees!}></ActivityListItemAttendee>
+        <ActivityListItemAttendee
+          attendees={activity.attendees!}
+        ></ActivityListItemAttendee>
       </Segment>
       <Segment clearing>
         <span> {activity.description}</span>
