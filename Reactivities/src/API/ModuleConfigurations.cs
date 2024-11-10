@@ -8,6 +8,7 @@ using Asp.Versioning;
 using Domain.Entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Photos;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,8 @@ public static class ModuleConfigurations
         services.AddDbContext<CoreDbContext>(opt => { opt.UseSqlite(configuration.GetConnectionString("Default")); });
         services.AddIdentity();
         services.AddAccessor();
+        services.AddConfigure(configuration);
+        services.AddPhotoService();
         services.AddCorsConfiguration();
         services.AddMediatorConfiguration();
         services.AddFluentValidatorConfiguration();
@@ -114,5 +117,14 @@ public static class ModuleConfigurations
     {
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
+    }
+
+    private static void AddConfigure(this IServiceCollection services, ConfigurationManager configuration)
+    {
+        services.Configure<CloudinarySettings>(configuration.GetSection(nameof(CloudinarySettings)));
+    } 
+    private static void AddPhotoService(this IServiceCollection services)
+    {
+        services.AddScoped<IPhotoAccessor, PhotoAccessor>();
     }
 }
