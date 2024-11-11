@@ -3,7 +3,7 @@ using Application.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers.Activities;
+namespace Application.Handlers.Activities.Commands;
 
 public class EditActivityCommandHandler(CoreDbContext context) : IRequestHandler<EditActivityCommand, Result<bool>>
 {

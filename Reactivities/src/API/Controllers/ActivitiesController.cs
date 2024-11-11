@@ -5,6 +5,7 @@ using Application.Dtos;
 using Application.Handlers;
 using Application.Mappings;
 using Application.Queries;
+using Application.Queries.Activities;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

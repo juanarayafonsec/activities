@@ -1,10 +1,11 @@
 ﻿using Application.Dtos;
 using Application.Mappings;
 using Application.Queries;
+using Application.Queries.Activities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers.Activities;
+namespace Application.Handlers.Activities.Queries;
 
 public class GetActivityHandler(CoreDbContext context) : IRequestHandler<GetActivityQuery, Result<ActivityDto>>
 {

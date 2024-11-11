@@ -1,5 +1,5 @@
 ﻿using Application.Dtos;
 
-namespace Application.Queries;
+namespace Application.Queries.Activities;
 
 public class GetActivitiesQuery : IRequest<Result<List<ActivityDto>>>;

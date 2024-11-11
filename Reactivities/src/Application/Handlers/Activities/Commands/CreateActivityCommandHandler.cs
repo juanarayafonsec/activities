@@ -5,7 +5,7 @@ using Application.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers.Activities;
+namespace Application.Handlers.Activities.Commands;
 public class CreateActivityCommandHandler(CoreDbContext context, IUserAccessor userAccessor) : IRequestHandler<CreateActivityCommand, Result<ActivityDto>>
 {
 
