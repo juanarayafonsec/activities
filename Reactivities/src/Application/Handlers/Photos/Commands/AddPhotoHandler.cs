@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
-namespace Application.Handlers.Photos;
+namespace Application.Handlers.Photos.Commands;
 
 public class AddPhotoHandler(CoreDbContext dbContext, IPhotoAccessor photoAccessor, IUserAccessor userAccessor)
     : IRequestHandler<AddPhotoCommand, Result<Photo>>
