@@ -1,5 +1,4 @@
 ﻿using Application.Dtos;
-using Application.Profiles;
 
 namespace Application.Mappings;
 
@@ -43,14 +42,15 @@ public static class ActivityMapper
         {
             Id = x.Id, Category = x.Category, City = x.City, Date = x.Date, Description = x.Description,
             Title = x.Title, Venue = x.Venue, IsCancelled = x.IsCancelled,
-            HostUsername = x.Attendees.FirstOrDefault(h => h.IsHost)?.AppUser.UserName, 
+            HostUsername = x.Attendees.FirstOrDefault(h => h.IsHost)?.AppUser.UserName,
             Attendees = x.Attendees.Map()
         }).ToList();
-    
+
     public static ActivityDto ToActivityDto(this Activity activity)
-        =>new()
+        => new()
         {
-            Id = activity.Id, Category = activity.Category, City = activity.City, Date = activity.Date, Description = activity.Description,
+            Id = activity.Id, Category = activity.Category, City = activity.City, Date = activity.Date,
+            Description = activity.Description,
             Title = activity.Title, Venue = activity.Venue, IsCancelled = activity.IsCancelled,
             HostUsername = activity.Attendees.FirstOrDefault(h => h.IsHost)?.AppUser.UserName,
             Attendees = activity.Attendees.Map()

@@ -6,7 +6,6 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
@@ -20,7 +19,8 @@ public class AccountController(UserManager<AppUser> userManager, TokenService to
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
-        var user = await userManager.FindByEmailAsync(loginDto.Email);
+        var user = await userManager.Users.Include(p => p.Photos)
+            .FirstOrDefaultAsync(x => x.Email == loginDto.Email);
 
         if (user is null) return Unauthorized();
 
@@ -36,7 +36,7 @@ public class AccountController(UserManager<AppUser> userManager, TokenService to
             return ModelError("username", "Username is taken");
         if (await userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             return ModelError("email", "Email is taken");
-            
+
 
         var user = new AppUser
         {
@@ -55,21 +55,20 @@ public class AccountController(UserManager<AppUser> userManager, TokenService to
     [HttpGet]
     public async Task<ActionResult<UserDto>> GetUser()
     {
-        var user = await userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+        var user = await userManager.Users.Include(p => p.Photos)
+            .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
         return CreateUserObject(user);
     }
 
     private UserDto CreateUserObject(AppUser user)
-    {
-        return new UserDto
+        => new()
         {
             DisplayName = user.DisplayName,
-            Image = null,
+            Image = user.Photos?.FirstOrDefault(p => p.IsMain)?.Url,
             Token = tokenService.GenerateToken(user),
             Username = user.UserName
         };
-    }
-
+    
     private ActionResult ModelError(string key, string errorMessage)
     {
         ModelState.AddModelError(key, errorMessage);

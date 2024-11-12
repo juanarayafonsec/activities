@@ -13,7 +13,9 @@ public class GetActivitiesHandler(CoreDbContext context) : IRequestHandler<GetAc
     {
         var activities = await context.Activities
             .Include(a => a.Attendees)
-            .ThenInclude(p => p.AppUser).ToListAsync(cancellationToken);
+            .ThenInclude(u => u.AppUser)
+            .ThenInclude(p => p.Photos)
+            .ToListAsync(cancellationToken);
         
         return Result<List<ActivityDto>>.Success(activities.ToActivityDto());
     }
