@@ -47,12 +47,12 @@ export default function ActivityLisyItem({ activity }: Props) {
         )}
         <ItemGroup>
           <Item>
-            <ItemImage style={{marinBotton:3}} size="tiny" circular src="/assets/user.png" />
+            <ItemImage style={{marinBotton:3}} size="tiny" circular src={activity.host?.image || "/assets/user.png"} />
             <ItemContent>
               <ItemHeader as={Link} to={`/activities/${activity.id}`}>
                 {activity.title}
               </ItemHeader>
-              <ItemDescription>{activity.host?.displayName}</ItemDescription>
+              <ItemDescription>Hosted by <Link to={`/profile/${activity.hostUsername}`}>{activity.host?.displayName}</Link></ItemDescription>
               {activity.isHost && (
                 <ItemDescription>
                   <Label basic color="orange">
