@@ -9,6 +9,6 @@ public static class ProfileMapper
         {
             Username = appUser.UserName, DisplayName = appUser.DisplayName, Bio = appUser.Bio,
             Image = appUser.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-            Photos = appUser.Photos?.Where(p => !p.IsMain).ToList()
+            Photos = appUser.Photos?.ToList()
         };
 }
