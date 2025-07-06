@@ -484,9 +484,9 @@ $RECYCLE.BIN/
 *.swp
 
 #sqlite autogen files
-Activities.Api/activities.db
+activities.db
 *.db-shm
 *.db-wal
 
 # appsettings
-Activities.Api/appsettings.json
+appsettings.json
