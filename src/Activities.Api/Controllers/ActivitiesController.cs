@@ -1,5 +1,6 @@
-﻿using Activities.Application.Messaging;
-using Activities.Application.Queries;
+﻿using Activities.Application.Activities.Commands;
+using Activities.Application.Activities.Queries;
+using Activities.Application.Messaging;
 using Activities.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,14 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
         var query = new GetActivityDetailsQuery(new Guid(id));
 
         return await mediator.SendQueryAsync<GetActivityDetailsQuery,Activity>(query);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Guid>> CreateActivity(Activity activity)
+    {
+        var command = new CreateActivityCommand(activity);
+
+        return await mediator.SendCommandAsync<CreateActivityCommand, Guid>(command);
     }
 }
 

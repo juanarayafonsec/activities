@@ -3,7 +3,7 @@ using Activities.Domain.Entity;
 using Activities.Infrastructure.Persistance.Context;
 
 
-namespace Activities.Application.Queries;
+namespace Activities.Application.Activities.Queries;
 
 public record GetActivityDetailsQuery(Guid Id) : IQuery<Activity>;
 

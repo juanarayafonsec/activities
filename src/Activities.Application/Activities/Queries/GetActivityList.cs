@@ -3,8 +3,8 @@ using Activities.Domain.Entity;
 using Activities.Infrastructure.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Activities.Application.Queries;
-public sealed class GetActivitiesQuery() : IQuery<List<Activity>>;
+namespace Activities.Application.Activities.Queries;
+public record GetActivitiesQuery() : IQuery<List<Activity>>;
 
 
 public sealed class GetActivitiesQueryHandler(ActivityContext context) : IQueryHandler<GetActivitiesQuery, List<Activity>>

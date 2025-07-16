@@ -1,5 +1,6 @@
-﻿using Activities.Application.Messaging;
-using Activities.Application.Queries;
+﻿using Activities.Application.Activities.Commands;
+using Activities.Application.Activities.Queries;
+using Activities.Application.Messaging;
 using Activities.Domain.Entity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,10 @@ public static class ModuleConfiguration
         // Register query handlers
         services.AddTransient<IQueryHandler<GetActivitiesQuery, List<Activity>>, GetActivitiesQueryHandler>();
         services.AddTransient<IQueryHandler<GetActivityDetailsQuery, Activity>, GetActivityDetailsQueryHandler>();
+
+
+        // Register command handlers
+        services.AddTransient<ICommandHandler<CreateActivityCommand, Guid>, CreateActivityCommandHandler>();
 
         return services;
     }
