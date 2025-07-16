@@ -1,25 +1,25 @@
-﻿using Activities.Domain.Entity;
-using Activities.Infrastructure.Persistance.Context;
+﻿using Activities.Application.Messaging;
+using Activities.Application.Queries;
+using Activities.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Activities.Api.Controllers;
-public class ActivitiesController(ActivityContext context) : BaseApiController
+public class ActivitiesController(IMediator mediator) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<List<Activity>>> GetActivities()
+    public async Task<ActionResult<List<Activity>>> GetActivities(CancellationToken cancellationToken)
     {
-        return await context.Activities.ToListAsync();
+        //return await mediator.Send(new GetActivityList.Query());
+        var query = new GetActivitiesQuery();
+        return await mediator.SendQueryAsync<GetActivitiesQuery, List<Activity>>(query, cancellationToken);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Activity>> GetActivity(string id)
     {
-        var activity = await context.Activities.FindAsync(Guid.Parse(id));
+        var query = new GetActivityDetailsQuery(new Guid(id));
 
-        if (activity == null) return NotFound();
-
-        return activity;
+        return await mediator.SendQueryAsync<GetActivityDetailsQuery,Activity>(query);
     }
 }
 
