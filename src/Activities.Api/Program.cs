@@ -1,3 +1,4 @@
+using Activities.Application.Extensions;
 using Activities.Infrastructure.Persistance;
 using Activities.Infrastructure.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<ActivityContext>(options =>
 });
 
 builder.Services.AddCors();
+builder.Services.AddApplicationModule();
 
 var app = builder.Build();
 
