@@ -8,10 +8,10 @@ namespace Activities.Api.Controllers;
 public class ActivitiesController(IMediator mediator) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<List<Activity>>> GetActivities(CancellationToken cancellationToken)
+    public async Task<ActionResult<List<Activity>>> GetActivities()
     {
         var query = new GetActivitiesQuery();
-        return await mediator.SendQueryAsync<GetActivitiesQuery, List<Activity>>(query, cancellationToken);
+        return await mediator.SendQueryAsync<GetActivitiesQuery, List<Activity>>(query);
     }
 
     [HttpGet("{id}")]
