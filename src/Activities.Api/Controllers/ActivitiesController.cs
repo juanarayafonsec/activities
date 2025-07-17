@@ -30,5 +30,15 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
 
         return await mediator.SendCommandAsync<CreateActivityCommand, Guid>(command);
     }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateActivity(Activity activity)
+    {
+        var command = new EditActivityCommand(activity);
+        
+        await mediator.SendCommandAsync<EditActivityCommand, bool>(command);
+        
+        return NoContent();
+    }
 }
 
