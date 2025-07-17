@@ -10,7 +10,6 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     [HttpGet]
     public async Task<ActionResult<List<Activity>>> GetActivities(CancellationToken cancellationToken)
     {
-        //return await mediator.Send(new GetActivityList.Query());
         var query = new GetActivitiesQuery();
         return await mediator.SendQueryAsync<GetActivitiesQuery, List<Activity>>(query, cancellationToken);
     }
@@ -20,7 +19,7 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     {
         var query = new GetActivityDetailsQuery(new Guid(id));
 
-        return await mediator.SendQueryAsync<GetActivityDetailsQuery,Activity>(query);
+        return await mediator.SendQueryAsync<GetActivityDetailsQuery, Activity>(query);
     }
 
     [HttpPost]
@@ -35,10 +34,20 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     public async Task<ActionResult> UpdateActivity(Activity activity)
     {
         var command = new EditActivityCommand(activity);
-        
+
         await mediator.SendCommandAsync<EditActivityCommand, bool>(command);
-        
+
         return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteActivity(string id)
+    {
+        var command = new DeleteCommand(new Guid(id));
+
+        await mediator.SendCommandAsync<DeleteCommand, bool>(command);
+
+        return Ok();
     }
 }
 

@@ -20,6 +20,8 @@ public static class ModuleConfiguration
         // Register command handlers
         services.AddTransient<ICommandHandler<CreateActivityCommand, Guid>, CreateActivityCommandHandler>();
         services.AddTransient<ICommandHandler<EditActivityCommand, bool>, EditActivityCommandHandler>();
+        services.AddTransient<ICommandHandler<DeleteCommand, bool>, DeleteCommandHandler>();
+
         return services;
     }
 }
