@@ -10,7 +10,11 @@ import {
 } from "@mui/material";
 import { Group } from "@mui/icons-material";
 
-export default function NavBar() {
+type Props = {
+  openForm: () => void;
+}
+
+export default function NavBar({ openForm }: Props) {
   return (
     <>
       <CssBaseline />
@@ -61,7 +65,7 @@ export default function NavBar() {
                   Contact
                 </MenuItem>
               </Box>
-              <Button size="large" variant="contained" color="warning">
+              <Button size="large" variant="contained" color="warning" onClick={openForm}>
                 Create activity
               </Button>
             </Toolbar>
