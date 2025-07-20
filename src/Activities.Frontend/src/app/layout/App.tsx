@@ -48,6 +48,13 @@ function App() {
     setEditMode(false);
 }
 
+const handleDelete = (id: string) => {
+  setActivities(activities.filter(activity => activity.id !== id));
+  if (selectedActivity?.id === id) {
+    setSelectActivity(undefined);
+  }
+}
+
 
   return (
     <Box sx={{ backgroundColor: "#eeeeee" }}>
@@ -63,6 +70,7 @@ function App() {
           openForm={handleOpenForm}
           closeForm={handleCloseForm}
           submitForm={handleSubmit}
+          deleteActivity={handleDelete}
         />
       </Container>
     </Box>
