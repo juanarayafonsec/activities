@@ -33,22 +33,6 @@ function App() {
     setEditMode(false);
   };
 
-  const handleSubmit = (activity: Activity) => {
-    // if(activity.id) {
-    //   setActivities(activities.map(a => a.id === activity.id ? activity : a));
-    // } else {
-    //   const newActivity = {...activity, id: activities.length.toString()}
-    //   setSelectActivity(newActivity);
-    //    setActivities([...activities, newActivity])
-    // }
-    console.log(activity);
-    setEditMode(false);
-  };
-
-  const handleDelete = (id: string) => {
-    console.log(id);
-  };
-
   return (
     <Box sx={{ backgroundColor: "#eeeeee", minHeight: "100vh" }}>
       <CssBaseline />
@@ -65,8 +49,6 @@ function App() {
             editMode={editMode}
             openForm={handleOpenForm}
             closeForm={handleCloseForm}
-            submitForm={handleSubmit}
-            deleteActivity={handleDelete}
           />
         )}
       </Container>

@@ -10,7 +10,7 @@ const agent = axios.create({baseURL: import.meta.env.VITE_API_URL});
 
 agent.interceptors.response.use(async response => {
     try {
-        await sleep(1000); // Simulate network delay
+        await sleep(100); // Simulate network delay
         return response;
     } catch (error) {
         console.log(error);
