@@ -16,7 +16,7 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Activity>> GetActivity(string id)
-    {
+     {
         var query = new GetActivityDetailsQuery(new Guid(id));
 
         return await mediator.SendQueryAsync<GetActivityDetailsQuery, Activity>(query);
