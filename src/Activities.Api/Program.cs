@@ -1,3 +1,5 @@
+using Activities.Api.Extensions;
+using Activities.Api.Middleware;
 using Activities.Application.Extensions;
 using Activities.Infrastructure.Persistance;
 using Activities.Infrastructure.Persistance.Context;
@@ -15,8 +17,12 @@ builder.Services.AddDbContext<ActivityContext>(options =>
 
 builder.Services.AddCors();
 builder.Services.AddApplicationModule();
+builder.Services.AddCustomValidatorError();
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000"));

@@ -1,4 +1,5 @@
 ﻿using Activities.Application.Activities.Commands;
+using Activities.Application.Activities.DTOs;
 using Activities.Application.Activities.Queries;
 using Activities.Application.Messaging;
 using Activities.Domain.Entity;
@@ -23,7 +24,7 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<Guid>> CreateActivity(Activity activity)
+    public async Task<ActionResult<Guid>> CreateActivity(CreateActivityDto activity)
     {
         var command = new CreateActivityCommand(activity);
 
