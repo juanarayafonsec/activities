@@ -19,8 +19,10 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     public async Task<ActionResult<Activity>> GetActivity(string id)
      {
         var query = new GetActivityDetailsQuery(new Guid(id));
+        
+        var ressult = await mediator.SendQueryAsync<GetActivityDetailsQuery, Result<Activity>>(query);
 
-        return await mediator.SendQueryAsync<GetActivityDetailsQuery, Activity>(query);
+        return HandleResult(ressult);
     }
 
     [HttpPost]

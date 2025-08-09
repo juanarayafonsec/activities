@@ -14,7 +14,7 @@ public static class ModuleConfiguration
 
         // Register query handlers
         services.AddTransient<IQueryHandler<GetActivitiesQuery, List<Activity>>, GetActivitiesQueryHandler>();
-        services.AddTransient<IQueryHandler<GetActivityDetailsQuery, Activity>, GetActivityDetailsQueryHandler>();
+        services.AddTransient<IQueryHandler<GetActivityDetailsQuery, Result<Activity>>, GetActivityDetailsQueryHandler>();
 
 
         // Register command handlers

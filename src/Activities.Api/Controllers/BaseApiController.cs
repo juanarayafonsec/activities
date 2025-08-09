@@ -1,6 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Activities.Application.Messaging;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Activities.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class BaseApiController : ControllerBase;
+public class BaseApiController : ControllerBase
+{
+    protected ActionResult<T> HandleResult<T>(Result<T> result)
+    {
+        if (!result.IsSuccess && result.Code == 404)
+            return NotFound();
+
+        if (result.IsSuccess && result.Value != null)
+            return Ok(result.Value);
+
+        return BadRequest(result.Error);
+    }
+}
+
