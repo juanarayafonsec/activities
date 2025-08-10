@@ -18,8 +18,8 @@ public static class ModuleConfiguration
 
 
         // Register command handlers
-        services.AddTransient<ICommandHandler<CreateActivityCommand, Guid>, CreateActivityCommandHandler>();
-        services.AddTransient<ICommandHandler<EditActivityCommand, bool>, EditActivityCommandHandler>();
+        services.AddTransient<ICommandHandler<CreateActivityCommand, Result<Guid>>, CreateActivityCommandHandler>();
+        services.AddTransient<ICommandHandler<EditActivityCommand, Result<bool>>, EditActivityCommandHandler>();
         services.AddTransient<ICommandHandler<DeleteCommand, Result<bool>>, DeleteCommandHandler>();
 
         return services;
