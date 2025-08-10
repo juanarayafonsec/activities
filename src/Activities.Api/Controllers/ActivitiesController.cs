@@ -12,7 +12,8 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     public async Task<ActionResult<List<Activity>>> GetActivities()
     {
         var query = new GetActivitiesQuery();
-        return await mediator.SendQueryAsync<GetActivitiesQuery, List<Activity>>(query);
+        var activities = await mediator.SendQueryAsync<GetActivitiesQuery, Result<List<Activity>>>(query);
+        return HandleResult(activities);
     }
 
     [HttpGet("{id}")]
@@ -30,27 +31,29 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     {
         var command = new CreateActivityCommand(activity);
 
-        return await mediator.SendCommandAsync<CreateActivityCommand, Guid>(command);
+        var result = await mediator.SendCommandAsync<CreateActivityCommand, Result<Guid>>(command);
+
+        return HandleResult(result);
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateActivity(Activity activity)
+    public async Task<ActionResult<bool>> UpdateActivity(Activity activity)
     {
         var command = new EditActivityCommand(activity);
 
-        await mediator.SendCommandAsync<EditActivityCommand, bool>(command);
+        var result = await mediator.SendCommandAsync<EditActivityCommand, Result<bool>>(command);
 
-        return NoContent();
+        return HandleResult(result);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteActivity(string id)
+    public async Task<ActionResult<bool>> DeleteActivity(string id)
     {
         var command = new DeleteCommand(new Guid(id));
-
-        await mediator.SendCommandAsync<DeleteCommand, bool>(command);
-
-        return Ok();
+        
+        var result = await mediator.SendCommandAsync<DeleteCommand, Result<bool>>(command);
+        
+        return HandleResult(result);
     }
 }
 

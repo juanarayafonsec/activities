@@ -13,14 +13,14 @@ public static class ModuleConfiguration
         services.AddScoped<IMediator, Mediator>();
 
         // Register query handlers
-        services.AddTransient<IQueryHandler<GetActivitiesQuery, List<Activity>>, GetActivitiesQueryHandler>();
+        services.AddTransient<IQueryHandler<GetActivitiesQuery, Result<List<Activity>>>, GetActivitiesQueryHandler>();
         services.AddTransient<IQueryHandler<GetActivityDetailsQuery, Result<Activity>>, GetActivityDetailsQueryHandler>();
 
 
         // Register command handlers
         services.AddTransient<ICommandHandler<CreateActivityCommand, Guid>, CreateActivityCommandHandler>();
         services.AddTransient<ICommandHandler<EditActivityCommand, bool>, EditActivityCommandHandler>();
-        services.AddTransient<ICommandHandler<DeleteCommand, bool>, DeleteCommandHandler>();
+        services.AddTransient<ICommandHandler<DeleteCommand, Result<bool>>, DeleteCommandHandler>();
 
         return services;
     }
