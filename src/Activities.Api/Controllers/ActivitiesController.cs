@@ -37,7 +37,7 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     }
 
     [HttpPut]
-    public async Task<ActionResult<bool>> UpdateActivity(Activity activity)
+    public async Task<ActionResult<bool>> UpdateActivity(EditActivityDto activity)
     {
         var command = new EditActivityCommand(activity);
 
