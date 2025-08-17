@@ -7,7 +7,7 @@ public class EditActivityDto : BaseActivityDto
     public Guid? Id { get; set; }
 
     [Required]
-    public bool? IsCancelled { get; set; }
+    public bool IsCancelled { get; set; }
 }
 
 
