@@ -6,23 +6,23 @@ public class BaseActivityDto
 {
     [Required]
     [MaxLength(100, ErrorMessage = "Title mus not exceed 100 characters")]
-    public required string Title { get; set; }
+    public string? Title { get; set; }
 
     [Required]
     [DateGreaterThanNow]
     public DateTime Date { get; set; }
 
     [Required]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [Required]
-    public string Category { get; set; }
+    public string? Category { get; set; }
 
     [Required]
-    public string City { get; set; }
+    public string? City { get; set; }
 
     [Required]
-    public string Venue { get; set; }
+    public string? Venue { get; set; }
 
     [Required]
     [Range(-90, 90)]

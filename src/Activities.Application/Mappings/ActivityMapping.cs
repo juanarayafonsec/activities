@@ -1,6 +1,4 @@
-﻿
-
-using Activities.Application.Activities.DTOs;
+﻿using Activities.Application.Activities.DTOs;
 using Activities.Domain.Entity;
 
 namespace Activities.Application.Mappings;
@@ -27,7 +25,7 @@ public static class ActivityMapping
     {
         activity.Title = editActivity.Title;
         activity.Category = editActivity.Category;
-        activity.Date = editActivity.Date;
+        activity.Date = editActivity.Date; 
         activity.Description = editActivity.Description;
         activity.Venue = editActivity.Venue;
         activity.City = editActivity.City;
