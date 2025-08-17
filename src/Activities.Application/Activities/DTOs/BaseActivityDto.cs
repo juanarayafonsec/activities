@@ -13,22 +13,22 @@ public class BaseActivityDto
     public DateTime Date { get; set; }
 
     [Required]
-    public required string Description { get; set; }
+    public string Description { get; set; }
 
     [Required]
-    public required string Category { get; set; }
+    public string Category { get; set; }
 
     [Required]
-    public required string City { get; set; }
+    public string City { get; set; }
 
     [Required]
-    public required string Venue { get; set; }
+    public string Venue { get; set; }
 
     [Required]
-    [LatitudeRangeAttribute]
+    [Range(-90, 90)]
     public double? Latitude { get; set; }
 
     [Required]
-    [LongitudeRangeAttribute]
+    [Range(-180,180)]
     public double? Longitude { get; set; }
 }

@@ -1,4 +1,3 @@
-using Activities.Api.Extensions;
 using Activities.Api.Middleware;
 using Activities.Application.Extensions;
 using Activities.Infrastructure.Persistance;
@@ -17,7 +16,6 @@ builder.Services.AddDbContext<ActivityContext>(options =>
 
 builder.Services.AddCors();
 builder.Services.AddApplicationModule();
-builder.Services.AddCustomValidatorError();
 builder.Services.AddTransient<ExceptionMiddleware>();
 
 var app = builder.Build();
