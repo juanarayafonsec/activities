@@ -39,7 +39,6 @@ export default function LocationInput<T extends FieldValues>(props: Props<T>) {
 
         try {
             const response = await axios.get<LocationIQSuggestion[]>(`${locationUrl}q=${query}`);
-            console.log(response.data);
             setSuggestions(response.data);
         } catch (error) {
             console.log(error);
@@ -59,7 +58,6 @@ export default function LocationInput<T extends FieldValues>(props: Props<T>) {
     const venue = location.display_name;
     const latitud = Number(location.lat);
     const longitud = Number(location.lon);
-    console.log({city, venue, latitud, longitud});
     setInputValue(venue);
     field.onChange({city, venue, latitud, longitud});
     setSuggestions([]);

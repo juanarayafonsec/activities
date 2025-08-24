@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 import { useLocation } from "react-router";
-import type { Activity } from "../types";
+import type { Activity, ActivityBase } from "../types";
 
 export const useActivities = (id?: string) => {
     const queryClient = useQueryClient();
@@ -26,8 +26,8 @@ export const useActivities = (id?: string) => {
   });
   
   const createActivity = useMutation({
-    mutationFn: async (activity: Activity) => {
-       const response = await agent.post<Activity>("activities", activity);
+    mutationFn: async (activity: ActivityBase) => {
+       const response = await agent.post<ActivityBase>("activities", activity);
        return response.data;
     },
     onSuccess: async () => {

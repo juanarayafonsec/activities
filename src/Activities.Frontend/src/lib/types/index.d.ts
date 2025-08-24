@@ -1,16 +1,17 @@
-export interface Activity {
-  id: string;
+interface ActivityBase {
   title: string;
   date: Date;
   description: string;
   category: string;
+  city: string;
+  latitud: number;
+  longitud: number;
+  venue?: string;
+}
+
+export interface Activity extends ActivityBase {
+  id: string;
   isCancelled: boolean;
-  location: {
-    city: string;
-    latitud: number;
-    longitud: number;
-    venue?: string;
-  };
 }
 
 export type LocationIQSuggestion = {

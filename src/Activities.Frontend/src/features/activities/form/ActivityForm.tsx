@@ -15,7 +15,7 @@ import DateTimeInput from "../../../app/shared/components/DateTimeInput";
 import LocationInput from "../../../app/shared/components/LocationInput";
 
 export default function ActivityForm() {
-  const {register, reset, control, handleSubmit} = useForm<ActivitySchema>({
+  const {reset, control, handleSubmit} = useForm<ActivitySchema>({
     mode: "onTouched",
     resolver: zodResolver(activitySchema),
   });
@@ -25,14 +25,35 @@ export default function ActivityForm() {
 
   useEffect(() => {
     if (activity) {
-      reset(activity);
+      reset({
+        ...activity,
+        location: {
+          city: activity.city,
+          venue: activity.venue,
+          latitud: activity.latitud,
+          longitud: activity.longitud
+        }
+      });
     }
   }, [activity, reset]);
 
   const navigate = useNavigate();
 
-  const onSubmit = (data: ActivitySchema) => {
-    console.log(data);
+  const onSubmit = async (data: ActivitySchema) => {
+    const {location, ...rest} = data
+    const flattenedData = {...rest, ...location};
+    try {
+      if(activity) {
+        updateActivity.mutate({...activity, ...flattenedData}, 
+          {onSuccess: () => navigate(`/activities/${activity.id}`)});
+      } else {
+        createActivity.mutate(flattenedData,
+          {onSuccess: (id) => navigate(`/activities/${id}`)}
+        ); 
+      }
+    } catch (error) {    
+      console.log(error);
+    }
   };
 
   if (isLoadingActivity) {
@@ -54,8 +75,10 @@ export default function ActivityForm() {
         >
           <TextInput label="Title" name="title" control={control}/>
           <TextInput label="Description" name="description" control={control} multiline rows={3}/>
-          <SelectInput items={categoryOptions} label="Category" name="category" control={control}/>
-          <DateTimeInput label="Date" name="date" control={control}/>
+          <Box display="flex" gap={3}>
+            <SelectInput items={categoryOptions} label="Category" name="category" control={control}/>
+            <DateTimeInput label="Date" name="date" control={control}/>
+          </Box>
           <LocationInput control={control} label="Enter the location" name="location"/>   
           <Box display="flex" justifyContent="end" gap={3}>
             <Button color="inherit"> Cancel </Button>
