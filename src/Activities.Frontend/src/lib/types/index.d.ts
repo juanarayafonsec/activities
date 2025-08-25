@@ -4,8 +4,8 @@ interface ActivityBase {
   description: string;
   category: string;
   city: string;
-  latitud: number;
-  longitud: number;
+  latitude: number;
+  longitude: number;
   venue?: string;
 }
 

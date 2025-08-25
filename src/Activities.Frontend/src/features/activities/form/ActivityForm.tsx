@@ -30,8 +30,8 @@ export default function ActivityForm() {
         location: {
           city: activity.city,
           venue: activity.venue,
-          latitud: activity.latitud,
-          longitud: activity.longitud
+          latitude: activity.latitude,
+          longitude: activity.longitude
         }
       });
     }
