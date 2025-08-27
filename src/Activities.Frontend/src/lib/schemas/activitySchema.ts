@@ -12,8 +12,8 @@ export const activitySchema = z.object({
     location: z.object({
         city: requiredString("City"),
         venue: z.string().optional(),
-        latitude: z.number(),
-        longitude: z.number()
+        latitude: z.number({error:"Longitude is required"}).min(-90).max(90),
+        longitude: z.number({error: "Longitude is required"}).min(-180).max(180),
     })
 })
 

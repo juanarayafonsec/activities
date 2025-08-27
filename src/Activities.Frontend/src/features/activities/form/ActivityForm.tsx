@@ -24,18 +24,19 @@ export default function ActivityForm() {
     useActivities(id);
 
   useEffect(() => {
-    if (activity) {
-      reset({
-        ...activity,
-        location: {
-          city: activity.city,
-          venue: activity.venue,
-          latitude: activity.latitude,
-          longitude: activity.longitude
-        }
-      });
-    }
-  }, [activity, reset]);
+  if (activity) {
+    reset({
+      ...activity,
+      date: new Date(activity.date),
+      location: {
+        city: activity.city,
+        venue: activity.venue,
+        latitude: activity.latitude,
+        longitude: activity.longitude
+      }
+    });
+  }
+}, [activity, reset]);
 
   const navigate = useNavigate();
 
