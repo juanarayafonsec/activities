@@ -1,7 +1,9 @@
 using Activities.Api.Middleware;
 using Activities.Application.Extensions;
+using Activities.Domain.Entity;
 using Activities.Infrastructure.Persistance;
 using Activities.Infrastructure.Persistance.Context;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,13 @@ builder.Services.AddDbContext<ActivityContext>(options =>
 builder.Services.AddCors();
 builder.Services.AddApplicationModule();
 builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddIdentityApiEndpoints<User>(opt =>
+{
+    opt.User.RequireUniqueEmail = true;
+
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ActivityContext>();
 
 var app = builder.Build();
 
@@ -24,7 +33,12 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000"));
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
+app.MapGroup("api").MapIdentityApi<User>();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -32,8 +46,9 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<ActivityContext>();
+    var userManager = services.GetRequiredService<UserManager<User>>();
     await context.Database.MigrateAsync();
-    await DbInitializer.SeedData(context);
+    await DbInitializer.SeedData(context, userManager);
 }
 catch (Exception ex)
 {
