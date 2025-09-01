@@ -32,9 +32,15 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
     opt.User.RequireUniqueEmail = true;
 
-})
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ActivityContext>();
+}).AddRoles<IdentityRole>().AddEntityFrameworkStores<ActivityContext>();
+
+builder.Services.ConfigureApplicationCookie(opts =>
+{
+    opts.Cookie.HttpOnly = true;
+    opts.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    opts.Cookie.SameSite = SameSiteMode.None;
+   opts.Cookie.Path = "/";
+});
 
 var app = builder.Build();
 
