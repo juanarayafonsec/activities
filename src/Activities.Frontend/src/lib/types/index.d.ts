@@ -41,3 +41,11 @@ export type LocationIQAddress = {
   suburb?: string
   town?: string
 }
+
+
+export type User = {
+  id: string
+  email: string
+  displayName: string
+  imageUrl?: string
+}

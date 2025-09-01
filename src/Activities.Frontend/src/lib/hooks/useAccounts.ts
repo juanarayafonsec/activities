@@ -1,13 +1,26 @@
-import { useMutation } from "@tanstack/react-query"
-import type { LoginSchema } from "../schemas/loginSchema"
-import agent from "../api/agent"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { LoginSchema } from "../schemas/loginSchema";
+import agent from "../api/agent";
+import type { User } from "../types";
 
 export const useAccount = () => {
- const loginUser = useMutation({
+  const queryClient = useQueryClient();
+  const loginUser = useMutation({
     mutationFn: async (creds: LoginSchema) => {
-        await agent.post("/login?useCookies=true", creds);
-    }
- });
+      await agent.post("login?useCookies=true", creds);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
 
- return { loginUser };
-}
+  const { data: currentUser } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await agent.get<User>("account/user-info");
+      return response.data;
+    },
+  });
+
+  return { loginUser, currentUser };
+};
