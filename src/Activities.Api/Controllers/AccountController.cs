@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Activities.Api.Controllers;
 public class AccountController(SignInManager<User> signInManager): BaseApiController
 {
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<ActionResult> Register(RegisterDto registerDto)
     {
