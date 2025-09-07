@@ -1,4 +1,7 @@
-﻿using Activities.Domain.Interfaces;
+﻿using Activities.Application.Interfaces;
+using Activities.Domain.Entity;
+using Activities.Infrastructure.Identity;
+using Activities.Infrastructure.Persistance;
 using Activities.Infrastructure.Persistance.Context;
 using Activities.Infrastructure.Persistance.Respository;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +17,10 @@ public static class ModuleConfiguration
         {
             options.UseSqlite(conf.GetConnectionString("DefaultConnection"));
         });
-        services.AddScoped<IActivityRepository,ActivityRepository>();
+
+        services.AddScoped<IUserAccessor, UserAccessor>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         return services;
     }
