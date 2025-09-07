@@ -20,10 +20,7 @@ builder.Services.AddControllers(opt =>
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
 
-builder.Services.AddDbContext<ActivityContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.Services.AddInfrastructureModule(builder.Configuration);
 
 builder.Services.AddCors();
 builder.Services.AddApplicationModule();
