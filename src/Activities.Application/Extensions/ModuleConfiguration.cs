@@ -1,4 +1,5 @@
 ﻿using Activities.Application.Activities.Commands;
+using Activities.Application.Activities.DTOs;
 using Activities.Application.Activities.Queries;
 using Activities.Application.Messaging;
 using Activities.Domain.Entity;
@@ -14,7 +15,7 @@ public static class ModuleConfiguration
 
         // Register query handlers
         services.AddTransient<IQueryHandler<GetActivitiesQuery, Result<List<Activity>>>, GetActivitiesQueryHandler>();
-        services.AddTransient<IQueryHandler<GetActivityDetailsQuery, Result<Activity>>, GetActivityDetailsQueryHandler>();
+        services.AddTransient<IQueryHandler<GetActivityDetailsQuery, Result<ActivityDto>>, GetActivityDetailsQueryHandler>();
 
 
         // Register command handlers

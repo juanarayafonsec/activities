@@ -1,5 +1,6 @@
 ﻿using Activities.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Activities.Infrastructure.Persistance.Respository;
 
@@ -20,6 +21,19 @@ public sealed class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<IReadOnlyList<T>> ListAsync(CancellationToken cancellationToken = default)
     {
         return await _set.AsNoTracking().ToListAsync(cancellationToken);
+    }
+
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IQueryable<T>>? include = null, CancellationToken cancellationToken = default)
+    {
+        IQueryable<T> query = _set;
+
+        if (include is not null)
+        {
+            query = include(query);
+        }
+
+        var entity = await query.AsNoTracking().FirstOrDefaultAsync(predicate, cancellationToken);
+        return entity;
     }
 
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
