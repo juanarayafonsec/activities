@@ -37,26 +37,52 @@ public static class ActivityMapping
     public static ActivityDto Map(this Activity activity)
     {
         return new ActivityDto(
-           activity.Id,
-           activity.Title,
-           activity.Date,
-           activity.Description,
-           activity.Category,
-           activity.IsCancelled,
-           activity.Attendees.FirstOrDefault(a => a.IsHost)!.User?.DisplayName,
-           activity.Attendees.FirstOrDefault(a => a.IsHost)!.User?.Id,
-           activity.City,
-           activity.Venue,
-           activity.Latitude,
-           activity.Longitude,
-           activity.Attendees
-               .OrderByDescending(a => a.IsHost)
-               .Select(a => new UserProfileDto(
-                   a.UserId,
-                   a.User?.DisplayName,
-                   a.User?.Bio,
-                   a.User?.ImageUrl))
-               .ToList()
+            activity.Id,
+            activity.Title,
+            activity.Date,
+            activity.Description,
+            activity.Category,
+            activity.IsCancelled,
+            activity.Attendees.FirstOrDefault(a => a.IsHost)!.User?.DisplayName,
+            activity.Attendees.FirstOrDefault(a => a.IsHost)!.User?.Id,
+            activity.City,
+            activity.Venue,
+            activity.Latitude,
+            activity.Longitude,
+            activity.Attendees
+                .Select(a => new UserProfileDto(
+                    a.UserId,
+                    a.User?.DisplayName,
+                    a.User?.Bio,
+                    a.User?.ImageUrl))
+                .ToList()
        );
+    }
+
+    public static List<ActivityDto>? Map(this IReadOnlyCollection<Activity>? activities)
+    {
+        return activities?.Select(activity => new ActivityDto
+        (
+            activity.Id,
+            activity.Title,
+            activity.Date,
+            activity.Description,
+            activity.Category,
+            activity.IsCancelled,
+            activity.Attendees?.FirstOrDefault(a => a.IsHost)?.User?.DisplayName,
+            activity.Attendees?.FirstOrDefault(a => a.IsHost)?.User?.Id,
+            activity.City,
+            activity.Venue,
+            activity.Latitude,
+            activity.Longitude,
+             activity.Attendees?
+                .Select(a => new UserProfileDto(
+                    a.UserId,
+                    a.User?.DisplayName,
+                    a.User?.Bio,
+                    a.User?.ImageUrl))
+                .ToList()
+        )).ToList();
+
     }
 }

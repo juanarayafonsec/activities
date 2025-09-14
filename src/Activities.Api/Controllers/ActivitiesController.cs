@@ -10,10 +10,10 @@ namespace Activities.Api.Controllers;
 public class ActivitiesController(IMediator mediator) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<List<Activity>>> GetActivities()
+    public async Task<ActionResult<List<ActivityDto>>> GetActivities()
     {
         var query = new GetActivitiesQuery();
-        var activities = await mediator.SendQueryAsync<GetActivitiesQuery, Result<List<Activity>>>(query);
+        var activities = await mediator.SendQueryAsync<GetActivitiesQuery, Result<List<ActivityDto>>>(query);
         return HandleResult(activities);
     }
 

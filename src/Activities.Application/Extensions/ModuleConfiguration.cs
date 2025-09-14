@@ -14,7 +14,7 @@ public static class ModuleConfiguration
         services.AddScoped<IMediator, Mediator>();
 
         // Register query handlers
-        services.AddTransient<IQueryHandler<GetActivitiesQuery, Result<List<Activity>>>, GetActivitiesQueryHandler>();
+        services.AddTransient<IQueryHandler<GetActivitiesQuery, Result<List<ActivityDto>>>, GetActivitiesQueryHandler>();
         services.AddTransient<IQueryHandler<GetActivityDetailsQuery, Result<ActivityDto>>, GetActivityDetailsQueryHandler>();
 
 

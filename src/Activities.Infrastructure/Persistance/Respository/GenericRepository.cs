@@ -18,9 +18,16 @@ public sealed class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _set.FindAsync([id], cancellationToken);
     }
 
-    public async Task<IReadOnlyList<T>> ListAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<T>> ListAsync(Func<IQueryable<T>, IQueryable<T>> include, CancellationToken cancellationToken = default)
     {
-        return await _set.AsNoTracking().ToListAsync(cancellationToken);
+        IQueryable<T> query = _set.AsNoTracking();
+
+        if (include is not null)
+        {
+            query = include(query);
+        }
+
+        return await query.ToListAsync(cancellationToken);
     }
 
     public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IQueryable<T>>? include = null, CancellationToken cancellationToken = default)
