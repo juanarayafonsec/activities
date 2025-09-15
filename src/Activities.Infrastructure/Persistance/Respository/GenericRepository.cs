@@ -30,17 +30,16 @@ public sealed class GenericRepository<T> : IGenericRepository<T> where T : class
         return await query.ToListAsync(cancellationToken);
     }
 
-    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IQueryable<T>>? include = null, CancellationToken cancellationToken = default)
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IQueryable<T>>? include = null, bool asTracking = false, CancellationToken cancellationToken = default)
     {
-        IQueryable<T> query = _set;
+        IQueryable<T> query = asTracking ? _set.AsQueryable() : _set.AsNoTracking();
 
         if (include is not null)
         {
             query = include(query);
         }
 
-        var entity = await query.AsNoTracking().FirstOrDefaultAsync(predicate, cancellationToken);
-        return entity;
+        return await query.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default)

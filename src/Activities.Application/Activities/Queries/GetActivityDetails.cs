@@ -17,7 +17,7 @@ public class GetActivityDetailsQueryHandler(IUnitOfWork unitOfWork) : IQueryHand
     public async Task<Result<ActivityDto>> HandleAsync(GetActivityDetailsQuery query, CancellationToken cancellationToken)
     {
         var activity = await unitOfWork.Repository<Activity>().FirstOrDefaultAsync(a => a.Id == query.Id,
-            include: q => q.Include(a => a.Attendees).ThenInclude(aa => aa.User), cancellationToken);
+            include: q => q.Include(a => a.Attendees).ThenInclude(aa => aa.User), asTracking:false, cancellationToken);
 
         if (activity == null) return Result<ActivityDto>.Failure("Activity not found", 404);
 

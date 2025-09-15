@@ -56,5 +56,13 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
         
         return HandleResult(result);
     }
+
+    [HttpPost("{id}/attend")]
+    public async Task<ActionResult<bool>> Attend(Guid id)
+    {
+        var command = new UpdateAttendanceCommand(id);
+        var result = await mediator.SendCommandAsync<UpdateAttendanceCommand, Result<bool>>(command);
+        return HandleResult(result);
+    }
 }
 

@@ -22,6 +22,7 @@ public static class ModuleConfiguration
         services.AddTransient<ICommandHandler<CreateActivityCommand, Result<Guid>>, CreateActivityCommandHandler>();
         services.AddTransient<ICommandHandler<EditActivityCommand, Result<bool>>, EditActivityCommandHandler>();
         services.AddTransient<ICommandHandler<DeleteCommand, Result<bool>>, DeleteCommandHandler>();
+        services.AddTransient<ICommandHandler<UpdateAttendanceCommand, Result<bool>>, UpdateAttendanceCommandHandler>();
 
         return services;
     }
