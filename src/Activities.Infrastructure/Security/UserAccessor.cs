@@ -4,7 +4,7 @@ using Activities.Infrastructure.Persistance.Context;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace Activities.Infrastructure.Identity;
+namespace Activities.Infrastructure.Security;
 public class UserAccessor(IHttpContextAccessor httpContextAccessor, ActivityContext context) : IUserAccessor
 {
     public async Task<User> GetUserAsync()

@@ -3,6 +3,7 @@ using Activities.Application.Activities.DTOs;
 using Activities.Application.Activities.Queries;
 using Activities.Application.Messaging;
 using Activities.Domain.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Activities.Api.Controllers;
@@ -37,7 +38,8 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
         return HandleResult(result);
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
+    [Authorize(Policy = "IsActivityHost")]
     public async Task<ActionResult<bool>> UpdateActivity(EditActivityDto activity)
     {
         var command = new EditActivityCommand(activity);
@@ -48,6 +50,7 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "IsActivityHost")]
     public async Task<ActionResult<bool>> DeleteActivity(string id)
     {
         var command = new DeleteCommand(new Guid(id));

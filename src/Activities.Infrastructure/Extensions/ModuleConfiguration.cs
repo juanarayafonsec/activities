@@ -1,9 +1,8 @@
 ﻿using Activities.Application.Interfaces;
-using Activities.Domain.Entity;
-using Activities.Infrastructure.Identity;
 using Activities.Infrastructure.Persistance;
 using Activities.Infrastructure.Persistance.Context;
 using Activities.Infrastructure.Persistance.Respository;
+using Activities.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

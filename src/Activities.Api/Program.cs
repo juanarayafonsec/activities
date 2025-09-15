@@ -3,6 +3,7 @@ using Activities.Application.Extensions;
 using Activities.Domain.Entity;
 using Activities.Infrastructure.Persistance;
 using Activities.Infrastructure.Persistance.Context;
+using Activities.Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -30,6 +31,14 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
     opt.User.RequireUniqueEmail = true;
 
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ActivityContext>();
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("IsActivityHost", policy =>
+    {
+        policy.Requirements.Add(new IsHostRequirement());
+    });
+});
+builder.Services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
 builder.Services.ConfigureApplicationCookie(opts =>
 {
