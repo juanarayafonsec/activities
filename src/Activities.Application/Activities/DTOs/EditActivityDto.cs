@@ -9,5 +9,3 @@ public class EditActivityDto : BaseActivityDto
     [Required]
     public bool IsCancelled { get; set; }
 }
-
-

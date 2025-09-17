@@ -2,7 +2,6 @@
 using Activities.Application.Activities.DTOs;
 using Activities.Application.Activities.Queries;
 using Activities.Application.Messaging;
-using Activities.Domain.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,8 +39,9 @@ public class ActivitiesController(IMediator mediator) : BaseApiController
 
     [HttpPut("{id}")]
     [Authorize(Policy = "IsActivityHost")]
-    public async Task<ActionResult<bool>> UpdateActivity(EditActivityDto activity)
+    public async Task<ActionResult<bool>> UpdateActivity([FromRoute] string id, EditActivityDto activity)
     {
+        activity.Id = new Guid(id);
         var command = new EditActivityCommand(activity);
 
         var result = await mediator.SendCommandAsync<EditActivityCommand, Result<bool>>(command);
